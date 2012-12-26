@@ -11,7 +11,7 @@ GEM
     activerecord (2.3.11)
       activesupport (= 2.3.11)
     activesupport (2.3.11)
-    cirrocumulus (0.9.6)
+    cirrocumulus (0.9.7)
       deil_sexpistol
       guid
       log4r

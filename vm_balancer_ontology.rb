@@ -11,6 +11,10 @@ end
 class VmBalancerOntology < Ontology
   ontology 'vm_balancer'
 
+  rule 'test', [ [:fact1, :FOO], [:fact2, :FOO], [:fact3, :BAR] ] do |ontology, params|
+    p params
+  end
+
   rule 'no_statistics', [ Statistics.new(:is => :unknown) ] do |ontology, params|
     ontology.logger.info "Need to gather VM statistics"
     ontology.refresh_statistics
@@ -27,7 +31,12 @@ class VmBalancerOntology < Ontology
 
   def restore_state
     logger.info "Restoring state"
-    assert [:statistics, :is, :unknown]
+    assert [:fact1, 1]
+    assert [:fact1, 2]
+    assert [:fact2, 1]
+    assert [:fact3, 3]
+
+    #assert [:statistics, :is, :unknown]
   end
 
   def refresh_statistics

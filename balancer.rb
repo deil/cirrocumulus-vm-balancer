@@ -3,6 +3,8 @@ require 'cirrocumulus'
 require 'log4r'
 require_relative 'vm_balancer_ontology'
 
+Encoding.default_internal = Encoding.default_external = "UTF-8"
+
 agent_logger = Log4r::Logger.new('agent')
 agent_logger.outputters = Log4r::Outputter.stdout
 

@@ -32,7 +32,7 @@ class RefreshStatsSaga < Saga
           end
 
           change_state(STATE_WAITING_FOR_STATISTICS)
-          timeout(30)
+          timeout(60)
         end
 
       when STATE_WAITING_FOR_STATISTICS

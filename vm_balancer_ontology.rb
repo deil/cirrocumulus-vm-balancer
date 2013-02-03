@@ -28,7 +28,11 @@ class VmBalancerOntology < Ontology
     ontology.refresh_statistics
   end
 
-  rule 'obsolete_statistics', [ Statistics.new(:is => :fresh) ], :for => 60.seconds do |ontology, params|
+  rule 'got_fresh_statistics', [ Statistics.new(:is => :fresh) ] do |ontology, params|
+    ontology.logger.info "Statistics is fresh. Working"
+  end
+
+  rule 'obsolete_statistics', [ Statistics.new(:is => :fresh) ], :for => 120.seconds do |ontology, params|
     ontology.replace Statistics.to_template, :IS => :obsolete
   end
 

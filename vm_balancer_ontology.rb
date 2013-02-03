@@ -1,8 +1,15 @@
 require 'active_support'
+require_relative 'refresh_stats_saga'
 
 class Statistics < KnowledgeClass
   klass :statistics
   property :is
+end
+
+class GuestCpuTime < KnowledgeClass
+  klass :guest
+  id :guest_id
+  property :cpu_time
 end
 
 #
@@ -10,10 +17,6 @@ end
 #
 class VmBalancerOntology < Ontology
   ontology 'vm_balancer'
-
-  rule 'test', [ [:fact1, :FOO], [:fact2, :FOO], [:fact3, :BAR] ] do |ontology, params|
-    p params
-  end
 
   rule 'no_statistics', [ Statistics.new(:is => :unknown) ] do |ontology, params|
     ontology.logger.info "Need to gather VM statistics"
@@ -25,24 +28,17 @@ class VmBalancerOntology < Ontology
     ontology.refresh_statistics
   end
 
-  rule 'obsolete_statistics', [ Statistics.new(:is => :fresh) ], :for => 1.minute do |ontology, params|
+  rule 'obsolete_statistics', [ Statistics.new(:is => :fresh) ], :for => 60.seconds do |ontology, params|
     ontology.replace Statistics.to_template, :IS => :obsolete
   end
 
   def restore_state
-    logger.info "Restoring state"
-    assert [:fact1, 1]
-    assert [:fact1, 2]
-    assert [:fact2, 1]
-    assert [:fact3, 3]
-
-    #assert [:statistics, :is, :unknown]
+    assert [:statistics, :is, :unknown]
   end
 
   def refresh_statistics
     replace [:statistics, :is, :STATE], :refreshing
-    sleep 1
-    replace [:statistics, :is, :STATE], :fresh
+    create_saga(RefreshStatsSaga).start()
   end
 
   def logger

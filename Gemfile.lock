@@ -11,17 +11,17 @@ GEM
     activerecord (2.3.11)
       activesupport (= 2.3.11)
     activesupport (2.3.11)
-    cirrocumulus (0.9.9)
-      deil_sexpistol
+    cirrocumulus (0.9.11)
+      deil_sexpistol (>= 0.0.9)
       guid
       log4r
       systemu
       xmpp4r
       xmpp4r-simple
-    deil_sexpistol (0.0.8)
+    deil_sexpistol (0.0.9)
     guid (0.1.1)
     log4r (1.1.10)
-    sqlite3 (1.3.6)
+    sqlite3 (1.3.7)
     systemu (2.5.2)
     xmpp4r (0.5)
 
@@ -30,6 +30,6 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord (= 2.3.11)
-  cirrocumulus (>= 0.9.8)
+  cirrocumulus (>= 0.9.11)
   sqlite3
   xmpp4r-simple!

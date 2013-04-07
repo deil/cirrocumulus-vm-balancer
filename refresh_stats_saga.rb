@@ -1,3 +1,31 @@
+require 'data_mapper'
+require 'dm-types'
+
+DataMapper.setup(:default, 'mysql://o1host:o1h0st@172.16.11.5/o1_panel')
+
+class VpsConfiguration
+  include DataMapper::Resource
+
+  property :id, Serial
+  property :vps_id, String
+  property :hvm, Boolean
+  property :created_at, Time
+  property :is_active, Boolean
+end
+
+class VpsConfigurationHistory
+  include DataMapper::Resource
+
+  property :id, Serial
+  property :vps_id, String
+  property :running, Boolean
+  property :ram, Integer
+  property :cpu, Integer
+  property :timestamp, Integer
+end
+
+DataMapper.finalize
+
 class RefreshStatsSaga < Saga
 
   STATE_QUERYING_RUNNING_GUESTS = 1
@@ -50,7 +78,7 @@ class RefreshStatsSaga < Saga
                 :RX => rx,
                 :TX => tx
             }
-          elsif contents[3] == :block_device
+          elsif contents[2] == :block_device
             dev = contents[3]
             rd_req = contents[5]
             rd_bytes = contents[7]

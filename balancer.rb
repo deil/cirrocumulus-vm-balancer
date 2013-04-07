@@ -25,7 +25,7 @@ JabberChannel::password 'q1w2e3r4'
 JabberChannel::conference 'cirrocumulus'
 
 agent = Cirrocumulus::Environment.new(`hostname`.chomp)
-agent.load_ontology(VmBalancerOntology.new(Agent.network('balancer')))
+agent.load_ontology(VmBalancerOntology.new(Agent.network('balancer2')))
 agent.run
 
 gets

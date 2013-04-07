@@ -6,3 +6,7 @@ gem "xmpp4r-simple", :git => 'git://github.com/blaine/xmpp4r-simple.git'
 # ?
 gem 'activerecord', '2.3.11'
 gem 'sqlite3'
+
+gem 'datamapper'
+gem 'dm-mysql-adapter'
+gem 'mysql2'
